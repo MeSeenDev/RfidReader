@@ -5,4 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 /**
  * @author Vyacheslav Doroshenko
  */
-open class BaseActivity : AppCompatActivity()
+open class BaseActivity : AppCompatActivity(){
+
+}

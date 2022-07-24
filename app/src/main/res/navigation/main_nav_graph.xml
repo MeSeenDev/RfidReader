@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/readerFragment">
 
+    <fragment
+        android:id="@+id/readerFragment"
+        android:name="ru.meseen.rfidreader.ui.reader.ReaderFragment"
+        android:label="fragment_reader"
+        tools:layout="@layout/fragment_reader" >
+        <action
+            android:id="@+id/action_readerFragment_to_logFragment"
+            app:launchSingleTop="true"
+            app:destination="@id/logFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="ru.meseen.rfidreader.ui.main.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/logFragment"
+        android:name="ru.meseen.rfidreader.ui.log.LogFragment"
+        android:label="LogFragment"
+        tools:layout="@layout/fragment_log">
+        <action
+            android:id="@+id/action_logFragment_to_readerFragment"
+            app:launchSingleTop="true"
+            app:destination="@id/readerFragment" />
+    </fragment>
 </navigation>
