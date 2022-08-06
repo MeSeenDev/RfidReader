@@ -28,7 +28,6 @@ class ReaderFragment : BaseFragment() {
     private var _binding: FragmentReaderBinding? = null
     private val binding get() = _binding!!
 
-    private val nfcAdapter:NfcAdapter? by lazy { NfcAdapter.getDefaultAdapter(context) }
 
     private val vm : ReaderViewModel by viewModels()
 
@@ -38,13 +37,6 @@ class ReaderFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentReaderBinding.inflate(inflater, container, false)
-        lifecycleScope.launch(Dispatchers.Default) {
-            delay(2000)
-            Snackbar.make(binding.button,"Is Nfc Enabled ${nfcAdapter?.isEnabled?: "not supported"}",Snackbar.LENGTH_SHORT).show()
-
-
-        }
-
 
         vm.start()
         return binding.root
