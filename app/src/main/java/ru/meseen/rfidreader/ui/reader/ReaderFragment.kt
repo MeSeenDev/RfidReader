@@ -39,6 +39,15 @@ class ReaderFragment : BaseFragment() {
         _binding = FragmentReaderBinding.inflate(inflater, container, false)
 
         vm.start()
+
+        binding.scan.setOnClickListener {
+            vm.addToLog("Start Scan")
+            lifecycleScope.launch {
+                delay(2000)
+                vm.addToLog("Stop Scan")
+            }
+
+        }
         return binding.root
     }
 

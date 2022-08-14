@@ -1,10 +1,8 @@
 package ru.meseen.rfidreader.ui.main
 
-import android.app.Activity
-import android.app.PendingIntent
 import android.content.Intent
 import android.nfc.NfcAdapter
-import android.nfc.tech.NfcA
+import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -13,6 +11,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigationrail.NavigationRailView
 import dagger.hilt.android.AndroidEntryPoint
 import ru.meseen.rfidreader.R
+import ru.meseen.rfidreader.bytes2Hex
+import ru.meseen.rfidreader.hex2Ascii
 import ru.meseen.rfidreader.ui.base.BaseActivity
 
 /**
@@ -23,7 +23,7 @@ class MainActivity : BaseActivity() {
 
     private val navController by lazy { Navigation.findNavController(this, R.id.container) }
 
-    val mNfcAdapter: NfcAdapter by lazy {NfcAdapter.getDefaultAdapter(this) }
+    val mNfcAdapter: NfcAdapter by lazy { NfcAdapter.getDefaultAdapter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +35,18 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onNewIntent(intent: Intent?) {
-        Log.wtf(TAG, "onNewIntent: $intent")
-        Toast.makeText(this, "Пришёл Интент \n ${intent?.action}", Toast.LENGTH_SHORT).show()
-    }
+        intent?.let {
+            Log.wtf(TAG, "onNewIntent: $it")
+            Toast.makeText(this, "Пришёл Интент \n ${it.action}", Toast.LENGTH_SHORT).show()
 
+            val tag = it.getParcelableExtra<Tag>(NfcAdapter.EXTRA_TAG)
+
+            Log.d(TAG, "onNewIntent:tag ${tag?.id?.bytes2Hex?.hex2Ascii}")
+
+            Toast.makeText(this, " tag $tag", Toast.LENGTH_SHORT).show()
+        }
+        super.onNewIntent(intent)
+    }
 
 
     companion object {
