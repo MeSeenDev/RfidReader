@@ -31,7 +31,11 @@ class MainActivity : BaseActivity() {
         val navigationRail: NavigationRailView = findViewById(R.id.navigation_rail)
         navigationRail.setupWithNavController(navController)
 
-        intent?.let { onNewIntent(it) }
+        nfvObserver.nfcStatus.observe(this){ nfcEnabled ->
+            Toast.makeText(this, "Nfc ${nfcEnabled}", Toast.LENGTH_SHORT).show()
+        }
+
+
     }
 
     override fun onNewIntent(intent: Intent?) {
